@@ -42,6 +42,29 @@ window.addEventListener('resize', function () {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
+window.addEventListener('dblclick', () => {
+  // This accounts f or Safari (does not support it)
+  const fullScreen =
+    document.fullscreenElement || document.webkitFullScreenElement;
+
+  // Check if document is already in FullScreen mode
+  if (!fullScreen) {
+    if (canvas.requestFullscreen) {
+      // If not, go to FullScreen mode
+      canvas.requestFullscreen();
+    } else if (canvas.webkitRequestFullscreen) {
+      canvas.webkitRequestFullscreen();
+    }
+  } else {
+    // Exit FullScreen mode
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+});
+
 /**
  * Camera
  */
